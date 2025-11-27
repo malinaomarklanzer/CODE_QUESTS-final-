@@ -1,0 +1,43 @@
+﻿@model SignUpViewModel
+@{
+    ViewData["Title"] = "Sign Up";
+    ViewData["BodyClass"] = "auth-body";
+}
+
+<div class="welcome-bubble">
+    <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+    <div>Unlock your first coding mission! Sign up and play to learn.</div>
+</div>
+
+<div class="form-container">
+    <h1 class="form-title">Create your Account</h1>
+
+    <form class="auth-form" asp-controller="Account" asp-action="SignUp" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-row">
+            <label asp-for="AvatarImage" class="avatar-upload">
+                <img src="~/images/camera.png" alt="Upload Avatar" />
+                <input asp-for="AvatarImage" type="file" style="display:none;" />
+            </label>
+
+            <div class="form-fields">
+                <input asp-for="UserName" placeholder="Username" />
+                <input asp-for="Password" placeholder="Password" />
+                <input asp-for="ConfirmPassword" placeholder="Confirm Password" />
+            </div>
+        </div>
+
+        <input asp-for="Email" placeholder="Email" />
+        <input asp-for="School" placeholder="School" />
+
+        <button type="submit" class="submit-btn">Sign Up For Free</button>
+    </form>
+    <div class="bottom-links">
+        <span>Already have an account? <a asp-controller="Account" asp-action="Login">Log in</a></span>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+    // We use "dashboard-bg" to get the same gradient as your other logged-in pages
+    ViewData["BodyClass"] = "dashboard-bg";
+}
+
+<div class="admin-container">
+
+    <div class="admin-main">
+        <div class="welcome-banner">
+            <img src="~/images/wizard-mascot.png" alt="Wizard Mascot" />
+            <div class="welcome-text">
+                <h3>Welcome back, Game Master!</h3>
+                <p>The quest awaits your command!</p>
+            </div>
+        </div>
+
+        <div class="admin-content-panel">
+            <div class="admin-welcome-text">
+                <h2>Welcome back, Admin!</h2>
+                <p>
+                    The system recognizes your authority once again. Lines of code await your inspection, and players are eager for your next challenge. Every quiz you create shapes their journey and tests their skills.
+                </p>
+            </div>
+
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card" style="--stat-color: #48BA1E;">
+                    <span class="admin-stat-value">20</span>
+                    <span class="admin-stat-label">Total Quizzes</span>
+                </div>
+                <div class="admin-stat-card" style="--stat-color: #1296CE;">
+                    <span class="admin-stat-value">300</span>
+                    <span class="admin-stat-label">Total Users</span>
+                </div>
+                <div class="admin-stat-card" style="--stat-color: #D32828;">
+                    <span class="admin-stat-value">40</span>
+                    <span class="admin-stat-label">New Users</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside class="admin-sidebar">
+        <div class="quick-actions-card">
+            <h4>Quick Actions</h4>
+            <a asp-action="CreateQuiz" asp-controller="Admin" class="action-btn">Create Quiz</a>
+            <a asp-action="ViewAllUsers" asp-controller="Admin" class="action-btn">View All Users</a>
+            <a asp-action="CheckLeaderboards" asp-controller="Admin" class="action-btn">Check Leaderboards</a>
+            <a asp-action="DraftQuizzes" asp-controller="Admin" class="action-btn">Draft Quizzes</a>
+        </div>
+
+        <div class="search-player-card">
+            <h4>Search Player</h4>
+            <form class.="search-form" action="#">
+                <input type="text" placeholder="Search user name..." />
+                <button type="submit" class="search-btn">
+                    <img src="~/images/search-icon.png" alt="Search" />
+                </button>
+            </form>
+        </div>
+    </aside>
+</div>

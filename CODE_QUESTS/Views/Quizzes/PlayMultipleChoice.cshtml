@@ -1,0 +1,260 @@
+﻿@using CODE_QUESTS.Models
+@model List<QuestionViewModel>
+@{
+    ViewData["Title"] = "Play Quiz";
+    ViewData["BodyClass"] = "dashboard-bg";
+}
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <img src="~/images/Component 2.pngs" alt="Wizard Mascot" />
+        <h2>@ViewData["QuizTitle"]</h2>
+    </div>
+
+    <div class="quiz-status-bar">
+        <div class="quiz-timer">Timer: <span id="time-left">20</span>s</div>
+        <div class="progress-bar-container"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
+        <div class="quiz-score">Score: <span id="score-text">0</span> | Streak: <span id="streak-text">0</span></div>
+        <a asp-controller="Quizzes" asp-action="Index" class="end-quiz-btn">End Quiz</a>
+    </div>
+
+    <div class="powerup-bar">
+        <button id="btn-freeze" class="powerup-btn" disabled title="Freeze Timer (Requires Streak 5)">❄️ Freeze (5)</button>
+        <button id="btn-show" class="powerup-btn" disabled title="Show Answer (Requires Streak 10)">👁️ Show (10)</button>
+        <button id="btn-double" class="powerup-btn" disabled title="Double Points (Requires Streak 15)">x2 Points (15)</button>
+        <button id="btn-safe" class="powerup-btn" disabled title="No Penalty (Requires Streak 20)">🛡️ Safe (20)</button>
+        <button id="btn-5050" class="powerup-btn" disabled title="Remove Wrong (Requires Streak 30)">✂️ 50/50 (30)</button>
+    </div>
+
+    <div class="quiz-card">
+        <div class="quiz-question-pane">
+            <h1 id="question-text"></h1>
+            <h2 id="feedback-text" style="display:none;"></h2>
+        </div>
+
+        <div class="quiz-options-pane">
+            <div id="options-grid" class="options-grid"></div>
+            <a href="#" id="next-btn" class="submit-btn" style="display:none; max-width: 300px; margin-top: 2rem;">Next Question</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const quizData = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let streak = 0; // NEW: Tracks consecutive correct answers
+        let timeLeft = 20;
+        let timerInterval;
+
+        // Power-Up Flags
+        let isDoublePoints = false;
+        let isSafeMode = false;
+
+        const questionText = document.getElementById("question-text");
+        const optionsGrid = document.getElementById("options-grid");
+        const feedbackText = document.getElementById("feedback-text");
+        const nextButton = document.getElementById("next-btn");
+        const scoreText = document.getElementById("score-text");
+        const streakText = document.getElementById("streak-text");
+        const timeLeftText = document.getElementById("time-left");
+        const progressBar = document.getElementById("progress-bar-fill");
+
+        // Power-Up Buttons
+        const btnFreeze = document.getElementById("btn-freeze");
+        const btnShow = document.getElementById("btn-show");
+        const btnDouble = document.getElementById("btn-double");
+        const btnSafe = document.getElementById("btn-safe");
+        const btn5050 = document.getElementById("btn-5050");
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            streak = 0;
+            updateStreakUI();
+            showQuestion();
+        }
+
+        function updateStreakUI() {
+            streakText.innerText = streak;
+
+            // Enable/Disable buttons based on streak
+            btnFreeze.disabled = streak < 5;
+            btnShow.disabled = streak < 10;
+            btnDouble.disabled = streak < 15;
+            btnSafe.disabled = streak < 20;
+            btn5050.disabled = streak < 30;
+
+            // Visual cue for active buttons
+            const btns = [btnFreeze, btnShow, btnDouble, btnSafe, btn5050];
+            btns.forEach(btn => {
+                if(btn.disabled) btn.style.opacity = "0.5";
+                else btn.style.opacity = "1";
+            });
+        }
+
+        // --- POWER UP FUNCTIONS ---
+
+        btnFreeze.addEventListener("click", () => {
+            if(streak >= 5) {
+                streak -= 5; // Cost
+                timeLeft += 5; // Effect: Add 5 seconds
+                updateStreakUI();
+                alert("Time Frozen! +5 Seconds added.");
+            }
+        });
+
+        btnShow.addEventListener("click", () => {
+            if(streak >= 10) {
+                streak -= 10; // Cost
+                updateStreakUI();
+                // Effect: Highlight correct answer visually
+                const correctBtn = document.querySelector('[data-correct="true"]');
+                correctBtn.style.border = "5px solid gold";
+            }
+        });
+
+        btnDouble.addEventListener("click", () => {
+            if(streak >= 15) {
+                streak -= 15; // Cost
+                isDoublePoints = true; // Effect: Next correct answer is x2
+                updateStreakUI();
+                alert("Double Points Active for this question!");
+            }
+        });
+
+        btnSafe.addEventListener("click", () => {
+            if(streak >= 20) {
+                streak -= 20; // Cost
+                isSafeMode = true; // Effect: No penalty
+                updateStreakUI();
+                alert("Safe Mode Active! No points lost for wrong answer.");
+            }
+        });
+
+        btn5050.addEventListener("click", () => {
+             if(streak >= 30) {
+                streak -= 30; // Cost
+                updateStreakUI();
+                // Effect: Remove one wrong option
+                const wrongBtns = Array.from(document.querySelectorAll('[data-correct="false"]'));
+                if(wrongBtns.length > 0) {
+                    wrongBtns[0].style.visibility = "hidden"; // Hide one wrong button
+                }
+            }
+        });
+
+
+        function showQuestion() {
+            feedbackText.style.display = "none";
+            nextButton.style.display = "none";
+            optionsGrid.innerHTML = "";
+
+            // Reset per-question flags
+            isDoublePoints = false;
+            isSafeMode = false;
+
+            let question = quizData[currentQuestionIndex];
+            if (!question) return;
+
+            questionText.innerText = question.questionText;
+
+            const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = progressPercent + "%";
+
+            question.options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option.text;
+                button.classList.add("option-btn");
+                button.dataset.correct = option.isCorrect;
+                button.addEventListener("click", selectAnswer);
+                optionsGrid.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+        function startTimer() {
+            timeLeft = 20;
+            timeLeftText.innerText = timeLeft;
+            clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeLeftText.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showAnswer(null);
+                }
+            }, 1000);
+        }
+
+        function selectAnswer(e) {
+            clearInterval(timerInterval);
+            const selectedButton = e.target;
+            showAnswer(selectedButton);
+        }
+
+        function showAnswer(selectedButton) {
+            const isCorrect = selectedButton && selectedButton.dataset.correct === "true";
+
+            if (isCorrect) {
+                streak++; // Increase streak!
+
+                let points = 95;
+                if (isDoublePoints) points *= 2; // Apply Double Points
+
+                score += points;
+                scoreText.innerText = score;
+                feedbackText.innerText = `You're Correct! +${points} Points`;
+                feedbackText.className = "feedback-correct";
+            } else {
+                streak = 0; // Reset streak on fail
+
+                if (!isSafeMode) {
+                    // Apply penalty logic here if desired
+                    feedbackText.innerText = "Incorrect!";
+                } else {
+                    feedbackText.innerText = "Incorrect! (Safe Mode Protected)";
+                }
+
+                feedbackText.className = "feedback-wrong";
+            }
+
+            updateStreakUI(); // Refresh buttons
+
+            Array.from(optionsGrid.children).forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.correct === "true") btn.classList.add("correct");
+            });
+
+            if (selectedButton && !isCorrect) selectedButton.classList.add("wrong");
+
+            feedbackText.style.display = "block";
+            nextButton.style.display = "flex";
+        }
+
+        nextButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (nextButton.innerText === "Back to Quizzes") {
+                window.location.href = "@Url.Action("Index", "Quizzes")";
+                return;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                questionText.innerText = "Quiz Complete!";
+                feedbackText.innerText = "Your final score is " + score;
+                feedbackText.className = "feedback-correct";
+                optionsGrid.innerHTML = "";
+                nextButton.innerText = "Back to Quizzes";
+                nextButton.style.display = "flex";
+            }
+        });
+
+        startQuiz();
+    </script>
+}

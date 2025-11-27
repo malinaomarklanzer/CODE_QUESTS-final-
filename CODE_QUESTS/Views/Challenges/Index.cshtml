@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Challenges & Power-Ups";
+    ViewData["BodyClass"] = "dashboard-bg";
+}
+
+<div class="container" style="padding: 2rem 0;">
+
+    <div class="active-challenge-card">
+        <h2 class="pixel-font">Today's Mission</h2>
+        <p class="pixel-font">Complete 3 Quizzes with 100% Accuracy</p>
+
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Quizzes" asp-action="Index" class="challenge-start-btn pixel-font">
+                Start Now
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Account" asp-action="Login" class="challenge-start-btn pixel-font">
+                Start Now
+            </a>
+        }
+    </div>
+
+    <section class="mechanics-section">
+        <h2 class="pixel-font section-header">Streak Rewards</h2>
+        <p class="pixel-font sub-header">Maintain a streak to unlock in-game power-ups!</p>
+
+        <div class="rewards-list">
+            <div class="reward-row">
+                <img src="~/images/Component 2.png" alt="Wizard" class="wizard-icon" />
+                <div class="reward-bubble">
+                    <span class="streak-count pixel-font">5 Correct</span>
+                    <span class="reward-desc pixel-font">Freeze Timer (5s)</span>
+                </div>
+            </div>
+
+            <div class="reward-row">
+                <img src="~/images/Component 2.png" alt="Wizard" class="wizard-icon" />
+                <div class="reward-bubble">
+                    <span class="streak-count pixel-font">10 Correct</span>
+                    <span class="reward-desc pixel-font">Show Correct Answer</span>
+                </div>
+            </div>
+
+            <div class="reward-row">
+                <img src="~/images/Component 2.png" alt="Wizard" class="wizard-icon" />
+                <div class="reward-bubble">
+                    <span class="streak-count pixel-font">15 Correct</span>
+                    <span class="reward-desc pixel-font">Double Points (Next Question)</span>
+                </div>
+            </div>
+
+            <div class="reward-row">
+                <img src="~/images/Component 2.png" alt="Wizard" class="wizard-icon" />
+                <div class="reward-bubble">
+                    <span class="streak-count pixel-font">20 Correct</span>
+                    <span class="reward-desc pixel-font">No penalty for wrong answer</span>
+                </div>
+            </div>
+
+            <div class="reward-row">
+                <img src="~/images/Component 2.png" alt="Wizard" class="wizard-icon" />
+                <div class="reward-bubble">
+                    <span class="streak-count pixel-font">30 Correct</span>
+                    <span class="reward-desc pixel-font">Delete One Wrong Option</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

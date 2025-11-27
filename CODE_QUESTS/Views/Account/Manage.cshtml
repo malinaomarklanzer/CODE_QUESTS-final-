@@ -1,0 +1,71 @@
+﻿@model CODE_QUESTS.Models.ManageViewModel
+@{
+    ViewData["Title"] = "Profile Settings";
+    ViewData["BodyClass"] = "dashboard-bg"; // Use the same gradient
+}
+
+<div class="container" style="padding-top: 3rem; padding-bottom: 3rem;">
+
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["StatusMessage"]
+        </div>
+    }
+
+    <div class="manage-grid">
+        <div class="form-container">
+            <div class="welcome-bubble">
+                <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+                <span>Change Name</span>
+            </div>
+            <form class="auth-form" asp-controller="Account" asp-action="ChangeName" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="ChangeName.NewUserName" placeholder="New Username" />
+                <span asp-validation-for="ChangeName.NewUserName" class="text-danger"></span>
+                <button type="submit" class="submit-btn">Save</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <div class="welcome-bubble">
+                <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+                <span>Change Password</span>
+            </div>
+            <form class="auth-form" asp-controller="Account" asp-action="ChangePassword" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input asp-for="ChangePassword.OldPassword" placeholder="Old Password" type="password" />
+                <input asp-for="ChangePassword.NewPassword" placeholder="New Password" type="password" />
+                <input asp-for="ChangePassword.ConfirmPassword" placeholder="Confirm New Password" type="password" />
+
+                <button type="submit" class="submit-btn">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .manage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            background-color: #d1e7dd;
+            border: 1px solid #badbcc;
+            color: #0f5132;
+            border-radius: .25rem;
+            margin-bottom: 1rem;
+        }
+
+        @@media (max-width: 900px) {
+            .manage-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+}

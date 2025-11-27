@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Select a Quiz";
+    ViewData["BodyClass"] = "dashboard-bg";
+
+    // FIX: Safely cast the score to nullable int, then default to 0
+    int userScore = (ViewData["UserScore"] as int?) ?? 0;
+
+    bool isAuthorized = SignInManager.IsSignedIn(User);
+
+    const int T1_DEBUG = 3000;
+    const int T1_OUTPUT = 5000;
+    const int TIER2_UNLOCK = 7000;
+    const int T2_DEBUG = 9000;
+    const int T2_OUTPUT = 11000;
+    const int TIER3_UNLOCK = 13000;
+    const int T3_DEBUG = 15000;
+    const int T3_OUTPUT = 25000;
+}
+
+<section class="quiz-categories-section" style="padding: 4rem 0;">
+    <div class="container">
+        <h2 class="section-title">QUIZ CATEGORIES</h2>
+
+        <div class="unlock-info-card">
+            <div class="current-score-display">
+                <span>Your Current Score:</span>
+                <strong>@userScore Pts</strong>
+            </div>
+            <div class="unlock-rules">
+                <p><strong>Unlock Rules:</strong></p>
+                <ul>
+                    <li><span>Debugging Mode:</span> Earn enough points in Multiple Choice.</li>
+                    <li><span>Guess the Output:</span> Earn even more points.</li>
+                    <li><span>Next Tier:</span> Reach the score threshold to unlock new languages!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-selection-grid">
+
+            <div class="quiz-category-container">
+                <div class="category-header">
+                    <div style="display:flex; gap:10px;">
+                        <img src="~/images/html-icon.webp" alt="HTML" style="height:40px;" />
+                        <img src="~/images/css-icon5555.logowik.com__1_-removebg-preview.png" alt="CSS" style="height:40px;" />
+                    </div>
+                    <h3>BEGINNER: HTML & CSS</h3>
+                </div>
+                <div class="game-mode-links">
+                    <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Beginner">Multiple Choice</a>
+
+                    @if (isAuthorized && userScore >= T1_DEBUG)
+                    {
+                        <a asp-controller="Quizzes" asp-action="PlayDebugging" asp-route-id="Beginner">Debugging</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="disabled">Debugging (@T1_DEBUG Pts)</a>
+                    }
+
+                    @if (isAuthorized && userScore >= T1_OUTPUT)
+                    {
+                        <a asp-controller="Quizzes" asp-action="PlayGuessOutput" asp-route-id="Beginner">Guess the Output</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="disabled">Guess Output (@T1_OUTPUT Pts)</a>
+                    }
+                </div>
+            </div>
+
+            <div class="quiz-category-container @((!isAuthorized || userScore < TIER2_UNLOCK) ? "container-locked" : "")">
+                <div class="category-header">
+                    <div style="display:flex; gap:10px;">
+                        <img src="~/images/539-5397283_java-logo-icon-png-clipart-removebg-preview.png" alt="Java" style="height:40px;" />
+                        <img src="~/images/Csharp_Logo.png" alt="C#" style="height:40px;" />
+                    </div>
+                    <h3>INTERMEDIATE: JAVA & C#</h3>
+                </div>
+                <div class="game-mode-links">
+                    @if (isAuthorized && userScore >= TIER2_UNLOCK)
+                    {
+                        <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Intermediate">Multiple Choice</a>
+
+                        @if (userScore >= T2_DEBUG)
+                        {
+                            <a asp-controller="Quizzes" asp-action="PlayDebugging" asp-route-id="Intermediate">Debugging</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="disabled">Debugging (@T2_DEBUG Pts)</a>
+                        }
+
+                        @if (userScore >= T2_OUTPUT)
+                        {
+                            <a asp-controller="Quizzes" asp-action="PlayGuessOutput" asp-route-id="Intermediate">Guess the Output</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="disabled">Guess Output (@T2_OUTPUT Pts)</a>
+                        }
+                    }
+                    else
+                    {
+                        <div class="locked-message"><p><strong>LOCKED</strong></p><p>Reach @TIER2_UNLOCK Pts</p></div>
+                    }
+                </div>
+            </div>
+
+            <div class="quiz-category-container @((!isAuthorized || userScore < TIER3_UNLOCK) ? "container-locked" : "")">
+                <div class="category-header">
+                    <div style="display:flex; gap:10px;">
+                        <img src="~/images/javascript-logo-javascript-icon-transparent-free-png.webp" alt="JS" style="height:40px;" />
+                        <img src="~/images/911_c_logo__1_-removebg-preview.png" alt="C++" style="height:40px;" />
+                    </div>
+                    <h3>PROFESSIONAL: JS & C++</h3>
+                </div>
+                <div class="game-mode-links">
+                    @if (isAuthorized && userScore >= TIER3_UNLOCK)
+                    {
+                        <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Professional">Multiple Choice</a>
+
+                        @if (userScore >= T3_DEBUG)
+                        {
+                            <a asp-controller="Quizzes" asp-action="PlayDebugging" asp-route-id="Professional">Debugging</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="disabled">Debugging (@T3_DEBUG Pts)</a>
+                        }
+
+                        @if (userScore >= T3_OUTPUT)
+                        {
+                            <a asp-controller="Quizzes" asp-action="PlayGuessOutput" asp-route-id="Professional">Guess the Output</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="disabled">Guess Output (@T3_OUTPUT Pts)</a>
+                        }
+                    }
+                    else
+                    {
+                        <div class="locked-message"><p><strong>LOCKED</strong></p><p>Reach @TIER3_UNLOCK Pts</p></div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

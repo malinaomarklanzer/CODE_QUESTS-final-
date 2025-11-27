@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "My Profile";
+    ViewData["BodyClass"] = "profile-page-background";
+}
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="profile-container">
+
+    <div class="profile-banner-wrapper">
+        <img src="~/images/Rectangle 445.png" alt="Banner" class="banner-img" />
+    </div>
+
+    <div class="identity-card-layer">
+        <div class="identity-left-group">
+            <div class="avatar-circle-wrapper">
+                <img src="~/images/image 1.png" alt="Avatar" class="avatar-img" />
+            </div>
+            <div class="user-text-info">
+                <h2 class="pixel-font">@User.Identity?.Name</h2>
+                <p class="pixel-font sub-text">@User.Identity?.Name@@CODE_QUESTS.com</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-layer">
+        <a href="@Url.Action("Manage", "Account")" class="settings-link pixel-font">Settings</a>
+    </div>
+
+    <section class="stats-row">
+        <div class="stat-card">
+            <img src="~/images/Trophy.png" alt="Rank" />
+            <div class="stat-content">
+                <span class="stat-value color-blue pixel-font">10</span>
+                <span class="stat-label pixel-font">Global Rank</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <img src="~/images/Starry.png" alt="Points" />
+            <div class="stat-content">
+                <span class="stat-value color-pink pixel-font">300</span>
+                <span class="stat-label pixel-font">Total Points</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <img src="~/images/witch-hat 2.png" alt="Quests" />
+            <div class="stat-content">
+                <span class="stat-value color-green pixel-font">50</span>
+                <span class="stat-label pixel-font">Quest Done</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h3 class="section-title pixel-font">Achievement & Badge</h3>
+        <div class="glass-panel">
+            <div class="achievement-grid">
+                <div class="badge-item">
+                    <img src="~/images/9e22ad59-c6b5-4ea4-a327-b9a73f755677-removebg-preview 1.png" />
+                    <p class="pixel-font">First Quest</p>
+                </div>
+                <div class="badge-item">
+                    <img src="~/images/image 3.png" />
+                    <p class="pixel-font">Daily Contender</p>
+                </div>
+                <div class="badge-item">
+                    <img src="~/images/image 5.png" />
+                    <p class="pixel-font">Perfect Score</p>
+                </div>
+                <div class="badge-item">
+                    <img src="~/images/bd5ca24f-ec9d-466c-9411-1baacb016a99-removebg-preview 1.png" />
+                    <p class="pixel-font">Language Explorer</p>
+                </div>
+                <div class="badge-item">
+                    <img src="~/images/image 4.png" />
+                    <p class="pixel-font">Quiz Master</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h3 class="section-title pixel-font">Recent Activities</h3>
+        <div class="glass-panel">
+            <table class="activity-table pixel-font">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Quiz Name</th>
+                        <th>Score</th>
+                        <th>Result</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sep 30</td>
+                        <td>JAVA Looping Basics</td>
+                        <td>4/10</td>
+                        <td style="color: red;">FAIL</td>
+                        <td><a href="#" class="retry-btn">Retry</a></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 1</td>
+                        <td>HTML Structure 101</td>
+                        <td>9/10</td>
+                        <td style="color: forestgreen;">PASS</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 4</td>
+                        <td>CSS Selector Advanced</td>
+                        <td>10/10</td>
+                        <td style="color: deeppink;">PERFECT</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div style="height: 50px;"></div>
+</div>

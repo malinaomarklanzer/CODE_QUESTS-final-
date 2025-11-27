@@ -1,0 +1,160 @@
+﻿@using CODE_QUESTS.Models
+@model List<GuessOutputQuestion>
+@{
+    ViewData["Title"] = "Play Quiz";
+    ViewData["BodyClass"] = "dashboard-bg";
+}
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+        <h2>@ViewData["QuizTitle"]</h2>
+    </div>
+
+    <div class="quiz-status-bar">
+        <div class="quiz-timer">Timer: <span id="time-left">20</span>s</div>
+        <div class="progress-bar-container"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
+        <div class="quiz-score">Score: <span id="score-text">0</span></div>
+        <a asp-controller="Quizzes" asp-action="Index" class="end-quiz-btn">End Quiz</a>
+    </div>
+
+    <div class="quiz-card">
+        <div class="quiz-question-pane">
+            <h1 id="question-text">Guess the Output!</h1>
+            <pre id="code-problem" class="code-display"></pre>
+            <h2 id="feedback-text" style="display:none;"></h2>
+        </div>
+
+        <div class="quiz-options-pane">
+            <input type="text" id="answer-input" class="code-input" placeholder="Type the output..." autocomplete="off" />
+            <button id="submit-btn" class="submit-btn">Submit Answer</button>
+
+            <div id="solution-area" style="display:none; margin-top: 1rem;">
+                <p><strong>Correct Output:</strong></p>
+                <pre id="code-solution" class="code-display" style="font-size: 1rem; background: #e0ffe0; color: #000;"></pre>
+            </div>
+
+            <a href="#" id="next-btn" class="submit-btn" style="display:none; margin-top: 2rem;">Next Question</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // FIX: Wrapped in JSON.parse to fix the red warning line
+        const quizData = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 20;
+        let timerInterval;
+
+        const codeProblem = document.getElementById("code-problem");
+        const codeSolution = document.getElementById("code-solution");
+        const feedbackText = document.getElementById("feedback-text");
+        const answerInput = document.getElementById("answer-input");
+        const submitButton = document.getElementById("submit-btn");
+        const nextButton = document.getElementById("next-btn");
+        const solutionArea = document.getElementById("solution-area");
+        const scoreText = document.getElementById("score-text");
+        const timeLeftText = document.getElementById("time-left");
+        const progressBar = document.getElementById("progress-bar-fill");
+        const questionTitle = document.getElementById("question-text");
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            feedbackText.style.display = "none";
+            nextButton.style.display = "none";
+            solutionArea.style.display = "none";
+            submitButton.style.display = "flex";
+            answerInput.style.display = "block";
+            answerInput.value = "";
+            answerInput.disabled = false;
+
+            let question = quizData[currentQuestionIndex];
+            if(!question) {
+                 questionTitle.innerText = "No questions available.";
+                 return;
+            }
+
+            codeProblem.innerText = question.codeProblem;
+            codeSolution.innerText = question.correctOutput;
+
+            const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = progressPercent + "%";
+            startTimer();
+        }
+
+        function startTimer() {
+            timeLeft = 20;
+            timeLeftText.innerText = timeLeft;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeLeftText.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    checkAnswer();
+                }
+            }, 1000);
+        }
+
+        function checkAnswer() {
+            clearInterval(timerInterval);
+            let question = quizData[currentQuestionIndex];
+            let userAnswer = answerInput.value.trim();
+            let correctAnswer = question.correctOutput.trim();
+
+            let isCorrect = (userAnswer.toLowerCase() === correctAnswer.toLowerCase());
+
+            if (isCorrect) {
+                score += 150;
+                scoreText.innerText = score;
+                feedbackText.innerText = "You're Correct! +150 Points";
+                feedbackText.className = "feedback-correct";
+            } else {
+                feedbackText.innerText = "Incorrect!";
+                feedbackText.className = "feedback-wrong";
+            }
+            showAnswer();
+        }
+
+        function showAnswer() {
+            feedbackText.style.display = "block";
+            nextButton.style.display = "flex";
+            submitButton.style.display = "none";
+            answerInput.disabled = true;
+            solutionArea.style.display = "block";
+        }
+
+        submitButton.addEventListener("click", checkAnswer);
+
+        nextButton.addEventListener("click", () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                questionTitle.innerText = "Quiz Complete!";
+                feedbackText.innerText = "Your final score is " + score;
+                feedbackText.className = "feedback-correct";
+                codeProblem.style.display = "none";
+                solutionArea.style.display = "none";
+                answerInput.style.display = "none";
+
+                nextButton.innerText = "Back to Quizzes";
+                const newButton = nextButton.cloneNode(true);
+                nextButton.parentNode.replaceChild(newButton, nextButton);
+                newButton.addEventListener("click", function() {
+                    window.location.href = "@Url.Action("Index", "Quizzes")";
+                });
+            }
+        });
+
+        startQuiz();
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@model LeaderboardViewModel
+@{
+    ViewData["Title"] = "Leaderboard";
+    ViewData["BodyClass"] = "dashboard-bg"; // Use the same gradient background
+}
+
+<div class.="leaderboard-page">
+    <div class="container">
+
+        <!-- 1. "WHO'S LEADING" BUBBLE -->
+        <div class="page-intro">
+            <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+            <h2>Who’s leading the game right now?</h2>
+        </div>
+
+        <!-- 2. "YOUR RANK" CARD -->
+        <section class="user-rank-summary">
+            <div class="rank-info">
+                <img src="~/images/trophy.png" alt="Rank Trophy" />
+                <h3>YOUR RANK: @Model.CurrentUserRank</h3>
+            </div>
+            <div class="user-score">
+                Score: @Model.CurrentUserScore
+            </div>
+        </section>
+
+        <!-- 3. MAIN LEADERBOARD TABLE -->
+        <section class="leaderboard-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>RANK</th>
+                        <th>USERNAME</th>
+                        <th>TOTAL SCORE</th>
+                        <th>QUEST COMPLETED</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in Model.Entries)
+                    {
+                        string rankClass = "";
+                        if (entry.Rank == 1) { rankClass = "rank-gold"; }
+                        if (entry.Rank == 2) { rankClass = "rank-silver"; }
+                        if (entry.Rank == 3) { rankClass = "rank-bronze"; }
+
+                        <tr class="@rankClass">
+                            <td>
+                                @if (entry.Rank == 1)
+                                {
+                                    <img src="~/images/gold-medal.png" alt="Gold Medal" />
+                                }
+                                else if (entry.Rank == 2)
+                                {
+                                    <img src="~/images/silver-medal.png" alt="Silver Medal" />
+                                }
+                                else if (entry.Rank == 3)
+                                {
+                                    <img src="~/images/bronze-medal.png" alt="Bronze Medal" />
+                                }
+                                #@entry.Rank
+                            </td>
+                            <td>@entry.Username</td>
+                            <td>@entry.TotalScore.ToString("N0")</td>
+                            <td>@entry.QuestsCompleted</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model CODE_QUESTS.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["BodyClass"] = "dashboard-bg"; // This tells the layout to use the gradient
+}
+
+<div class="dashboard-container">
+    <div class="main-content">
+        <div class="welcome-banner">
+            <img src="~/images/Component 2.png" alt="Wizard Mascot" />
+            <div class="welcome-text">
+                <h3>Welcome to CodeQuest!</h3>
+                <p>Your coding adventure starts here.</p>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="course-info">
+                <p>Percentage: <strong>0%</strong></p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <p>Course</p>
+                <h4>HTML</h4>
+                <span>Level: 1</span>
+            </div>
+            <a asp-controller="Quizzes" asp-action="Index" class="start-btn">Start</a>
+        </div>
+
+        <div class="trivia-card">
+            <div class="trivia-header">
+                <img src="~/images/bulb 1.png" alt="Lightbulb Icon" />
+                <h4>TRIVIA:</h4>
+            </div>
+            <p>
+                Did you know that Python was not named after a snake? Its creator, Guido van Rossum, actually named it after the British comedy show “Monty Python’s Flying Circus.”
+            </p>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="profile-card">
+            <div class="profile-header">
+                <img src="~/images/image 1.png" alt="User Avatar" />
+                <div class="profile-info">
+                    <h5>@User.Identity?.Name</h5>
+                    <span>Level 1 - Beginner</span>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <img src="~/images/Starry.png" alt="Star" />
+                    <div>
+                        <p>Total Points</p>
+                        <strong>0</strong>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <img src="~/images/Trophy.png" alt="Trophy" />
+                    <div>
+                        <p>Ranking</p>
+                        <strong>0</strong>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <img src="~/images/witch-hat 2.png" alt="Quest Done" />
+                    <div>
+                        <p>Quest Done</p>
+                        <strong>0</strong>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <img src="~/images/star (1) 5.png" alt="Favorite" />
+                    <div>
+                        <p>Favorite</p>
+                        <strong>None</strong>
+                    </div>
+                </div>
+            </div>
+
+            <a asp-controller="Account" asp-action="Profile" class="profile-btn">View Profile</a>
+        </div>
+
+        <div class="leaderboard-preview-card">
+            <div class="leaderboard-card-header">
+                <img src="~/images/Trophy.png" alt="Leaderboard Icon" />
+                <h4>Leaderboards</h4>
+            </div>
+            <p>Where top players rise.</p>
+            <ol>
+                <li><span>1</span> CodeWarrior <span>3,000</span></li>
+                <li><span>2</span> ByteNinja <span>2,500</span></li>
+                <li><span>3</span> SyntaxSlayer <span>2,000</span></li>
+            </ol>
+            <a asp-controller="Leaderboard" asp-action="Index" class="leaderboard-btn">Check Leaderboards</a>
+        </div>
+    </aside>
+</div>

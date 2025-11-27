@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    bool isUserLoggedIn = SignInManager.IsSignedIn(User);
+
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    bool isAccountPage = controller.Equals("Account", StringComparison.OrdinalIgnoreCase);
+    var bodyClass = ViewData["BodyClass"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CODE_QUESTS</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="@bodyClass">
+    <header class="main-header">
+        <a asp-controller="Home" asp-action="@(isUserLoggedIn ? "Dashboard" : "Index")" class="header-logo text-shadow">
+            <span class="text-blue">Code</span><span class="text-pink">Quest</span>
+        </a>
+        <nav class="main-nav">
+            <a asp-controller="Home" asp-action="@(isUserLoggedIn ? "Dashboard" : "Index")">Home</a>
+            <a asp-controller="Quizzes" asp-action="Index">Quizzes</a>
+            <a asp-controller="Challenges" asp-action="Index">Challenges</a>
+            <a asp-controller="Leaderboard" asp-action="Index">Leaderboard</a>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin" asp-action="Index" style="color: red;">Admin Panel</a>
+            }
+        </nav>
+        <div class="header-buttons">
+            @if (isUserLoggedIn)
+            {
+                <a asp-controller="Account" asp-action="Profile" class="header-btn login-btn-header text-shadow">
+                    @User.Identity?.Name
+                </a>
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="header-btn signup-btn-header text-shadow">Logout</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="header-btn login-btn-header text-shadow">Login</a>
+                <a asp-controller="Account" asp-action="SignUp" class="header-btn signup-btn-header text-shadow">Sign Up</a>
+            }
+        </div>
+    </header>
+
+    @if (ViewData["Title"]?.ToString() == "Welcome to CodeQuest")
+    {
+        @RenderBody()
+    }
+    else if (ViewData["BodyClass"] != null && (ViewData["BodyClass"].ToString().Contains("dashboard-bg") || ViewData["BodyClass"].ToString().Contains("profile-page-background")))
+    {
+        @RenderBody()
+    }
+    else
+    {
+        <main class="auth-main-content">
+            @RenderBody()
+        </main>
+    }
+
+    <footer class="main-footer">
+        <div class="footer-logo text-shadow"><span class="text-blue">Code</span><span class="text-pink">Quest</span></div>
+        <div class="footer-links">
+            <div class="footer-column">
+                <a href="#">Company</a>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="footer-column">
+                <a href="#">Support</a>
+                <a href="#">Community</a>
+                <a href="#">Help Center</a>
+            </div>
+            <div class="footer-column">
+                <a href="#">Legal</a>
+                <a href="#">Pricing</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
