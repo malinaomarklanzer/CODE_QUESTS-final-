@@ -1,0 +1,57 @@
+﻿@using CODE_QUESTS.Models
+@{
+    // Setup
+    int currentScene = 1;
+    if (ViewData["SceneNumber"] != null) { currentScene = Convert.ToInt32(ViewData["SceneNumber"]); }
+
+    ViewData["Title"] = "Beginner Story";
+    ViewData["BodyClass"] = "cinematic-bg";
+    string quizId = "Beginner";
+    string viewName = "IntroBeginner";
+}
+
+<div class="container">
+    <div class="game-start-scene">
+
+        @if (currentScene == 1)
+        {
+            <div class="scene-layer bg-layer bg-beginner-1"></div>
+            <div class="dialogue-box">
+                <p>Princess Arraya demonstrates the Responsive Code Crystal, showing its three-tier glow.</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="NavigateTierIntro" asp-route-viewName="@viewName" asp-route-nextScene="2" asp-route-quizId="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 2)
+        {
+            <div class="scene-layer bg-layer bg-beginner-2"></div>
+
+            <div class="dialogue-box">
+                <p>The Buglord's attack shatters the crystal! Shards fly to the HTML Forest...</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="NavigateTierIntro" asp-route-viewName="@viewName" asp-route-nextScene="3" asp-route-quizId="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 3)
+        {
+            <div class="scene-layer bg-layer bg-beginner-3"></div>
+
+            <div class="dialogue-box">
+                <p>Objective: Restore the World's Structure (HTML) and Style (CSS) to rebuild the foundation.</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="PlayMultipleChoice" asp-route-id="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Start" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

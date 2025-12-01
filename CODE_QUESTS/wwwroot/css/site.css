@@ -2199,75 +2199,123 @@ body {
         margin: 0;
     }
 /* =============================================== */
-/* 11. GAME START / CINEMATIC STYLES (CONTAINED)   */
+/* 11. CINEMATIC STYLES (FIXED FOR NEW NAMES)      */
 /* =============================================== */
 
 .cinematic-bg {
     background: var(--bg-gradient);
-    /* Removed 100vh/100vw forcing */
 }
 
+/* Main Container: Fixed size for consistency */
 .game-start-scene {
     width: 100%;
-    max-width: 1280px; /* Keeps it from getting too wide */
-    height: 650px; /* Fixed height for the game window */
-    margin: 2rem auto; /* Centers it on the page */
-
+    max-width: 1280px;
+    height: 720px; /* Standard 16:9 aspect ratio */
+    margin: 2rem auto;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Pushes dialogue to bottom */
+    align-items: flex-end;
     padding-bottom: 30px;
-    border: 5px solid #C4B5FD; /* Optional: Adds a nice border like the game cards */
+    border: 5px solid #C4B5FD;
     border-radius: 30px;
-    background-color: #000;
+    background-color: #000; /* Black if image missing */
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.game-bg-image {
+/* Shared Layer Styles */
+.scene-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
+}
+
+/* --- BACKGROUNDS (Cover the whole screen) --- */
+.bg-layer {
     z-index: 0;
+    background-size: 100% 100%;
+    background-position: center;
 }
 
-/* --- SCENE IMAGES --- */
-.scene-one-capture {
-    background-image: url('../images/Gemini_Generated_Image_xx5y70xx5y70xx5y.png');
+/* --- OVERLAYS (Characters on top) --- */
+/* --- OVERLAYS (Characters) --- */
+.overlay-layer {
+    z-index: 1;
+    background-size: contain; /* Keep characters proportional */
+    background-position: center bottom; /* Feet on the ground */
+    width: 100%;
+    height: 100%;
+    bottom: 0;
 }
 
-.scene-two-vow {
-    background-image: url('../images/Gemini_Generated_Image_oetdjhoetdjhoetd.png');
+
+/* ====== IMAGE MAPPING (FIXED PATHS) ====== */
+
+/* Scene 1: Kingdom */
+.bg-scene-1 {
+    /* Try this path format which is safer */
+    background-image: url('/images/Scene1bg.png');
+    background-color: #222; /* Debug color: if you see dark gray, the image path is wrong */
 }
 
-.scene-three-plea {
-    background-image: url('../images/Gemini_Generated_Image_od2nv7od2nv7od2n.png');
+/* Scene 2: Capture (Bg + Bandits) */
+.bg-scene-2 {
+    background-image: url('/images/Scene2bg.png');
 }
 
-/* --- DIALOGUE BOX --- */
+.overlay-scene-2 {
+    background-image: url('/images/Scene2bandits.png');
+}
+
+/* Scene 3: Knight Arrives (Bg + Standing Knight) */
+.bg-scene-3 {
+    background-image: url('/images/Scene3bg.png');
+}
+
+.overlay-scene-3 {
+    background-image: url('/images/Scene3knight.png');
+    transform: scale(0.7);
+    transform-origin: bottom;
+}
+
+/* Scene 4: The Vow (Reuses Scene 1 BG + Sword Knight) */
+.bg-scene-4 {
+    background-image: url('/images/Scene1.png');
+}
+
+.overlay-scene-4 {
+    background-image: url('/images/Scene4knight.png');
+    background-size: 50%;
+    background-position: center bottom;
+}
+
+/* Scene 5: Princess (Single Image) */
+.bg-scene-5 {
+    background-image: url('/images/Scene5.png');
+}
+
+/* ====== DIALOGUE BOX ====== */
 .dialogue-box {
     position: relative;
     z-index: 10;
     width: 90%;
-    max-width: 900px;
+    max-width: 1000px;
     background: rgba(217, 217, 217, 0.95);
     border: 5px solid #6BB2EF;
     border-radius: 30px;
-    padding: 2rem 8rem 2rem 3rem; /* Extra right padding for button */
+    padding: 2rem 8rem 2rem 3rem;
     display: flex;
     align-items: center;
-    min-height: 120px;
+    
 }
 
     .dialogue-box p {
         font-family: 'Pixelify Sans', sans-serif;
-        font-size: 24px;
+        font-size: 28px;
         line-height: 1.3;
         color: #000;
         margin: 0;
@@ -2276,8 +2324,8 @@ body {
 .action-button {
     position: absolute;
     right: 30px;
-    bottom: 50%;
-    transform: translateY(50%); /* Vertically centers the button */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
     .action-button a {
@@ -2547,5 +2595,243 @@ body {
     to {
         transform: scale(1);
         opacity: 1;
+    }
+}
+/* =============================================== */
+/* 12. CINEMATIC ANIMATIONS                        */
+/* =============================================== */
+
+/* 1. Background Animation (Slow Zoom & Pan) */
+/* This creates the "camera movement" effect */
+@keyframes subtle-zoom {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+    /* Zooms in 10% */
+}
+
+.game-bg-image {
+    /* Existing styles... */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    /* NEW ANIMATION: Runs for 20 seconds, zooms in and out smoothly */
+    animation: subtle-zoom 20s infinite alternate ease-in-out;
+}
+
+/* 2. Dialogue Box Animation (Slide Up) */
+/* Makes the text box enter from the bottom */
+@keyframes slide-up-fade {
+    0% {
+        opacity: 0;
+        transform: translate(0, 50px); /* Start lower */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0); /* End in place */
+    }
+}
+
+.dialogue-box {
+    /* Existing styles... */
+    /* Add this line to animate the box entry */
+    animation: slide-up-fade 0.8s ease-out forwards;
+}
+
+/* 3. Knight Overlay Animation (Scene 4) */
+/* Makes the knight fade in and slide up slightly */
+@keyframes knight-entry {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.knight-overlay {
+    /* Existing styles... */
+    /* Add this to animate the knight */
+    animation: knight-entry 1.5s ease-out forwards;
+}
+
+/* 4. Button Hover Pulse */
+@keyframes pulse-btn {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.action-button a:hover img {
+    animation: pulse-btn 1s infinite;
+}
+/* --- BEGINNER TIER CINEMATICS --- */
+
+.bg-beginner-1 {
+    background-image: url('../images/image 25.png');
+    background-size: 100% 100%;
+
+    .bg-beginner-2 {
+        background-image: url('../images/image 26.png');
+        background-size: 100% 100%;
+    }
+
+    .bg-beginner-3 {
+        background-image: url('../images/Scene3bg.png');
+        background-size: 100% 100%;
+    }
+    /* =============================================== */
+    /* TIER 2 CINEMATICS (Intermediate)                */
+    /* =============================================== */
+    /* --- BACKGROUNDS --- */
+    .bg-tier2-1 {
+        background-image: url('../images/image 25.png');
+        background-size: 100% 100%;
+    }
+
+    .bg-tier2-2 {
+        background-image: url('../images/image 25.png');
+        background-size: 100% 100%;
+    }
+
+    .bg-tier2-3 {
+        background-image: url('../images/image 25.png');
+        background-size: 100% 100%;
+    }
+    /* --- OVERLAYS --- */
+    /* SCENE 1: Knight (Left) */
+    .overlay-tier2-knight-s1 {
+        background-image: url('../images/interknight.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom; /* Fixed alignment */
+        width: 35%;
+        height: 70%;
+        bottom: 0;
+        left: 15%;
+        position: absolute;
+        z-index: 1;
+    }
+    /* SCENE 1: Princess (Right) */
+    .overlay-tier2-princess {
+        background-image: url('../images/interprin.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        width: 35%;
+        height: 65%;
+        bottom: 0;
+        right: 15%;
+        position: absolute;
+        z-index: 1;
+    }
+    /* SCENE 2: Knight (Battle Stance) */
+    .overlay-tier2-knight {
+        background-image: url('../images/Knighty.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        width: 40%;
+        height: 70%;
+        bottom: 0;
+        left: 10%;
+        position: absolute;
+        z-index: 1;
+    }
+    /* SCENE 2: Buglord (Villain) */
+    .overlay-tier2-buglord {
+        background-image: url('../images/bug.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        width: 40%;
+        height: 75%;
+        bottom: 0;
+        right: 10%;
+        position: absolute;
+        z-index: 1;
+    }
+    /* --- TIER 3 CINEMATICS (Professional) --- */
+
+    .bg-tier3-1 {
+        background-image: url('../images/image 25.png');
+        background-size: 100% 100%;
+    }
+
+    .bg-tier3-2 {
+        background-image: url('../images/image 25.png'); /* Throne Room BG */
+        background-size: 100% 100%;
+    }
+
+    .overlay-tier3-knight {
+        background-image: url('../images/interknight.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        width: 30%;
+        height: 60%;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%); /* Center him */
+        position: absolute;
+        z-index: 1;
+    }
+    /* --- VICTORY SCENES --- */
+    /* Scene 1: Princess & Knight (Throne Room) */
+    .bg-victory-1 {
+        background-image: url('../images/Scene1bg.png');
+        background-size: 100% 100%;
+    }
+    /* Scene 2: Restored Kingdom */
+    .bg-victory-2 {
+        background-image: url('../images/Scene1bg.png');
+        background-size: 100% 100%;
+    }
+
+
+    .overlay-trophy {
+        background-image: url('../images/Trophy.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 300px;
+        height: 300px;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: trophy-bounce 2s infinite ease-in-out;
+        z-index: 2;
+    }
+
+    @keyframes trophy-bounce {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
     }
 }

@@ -10,6 +10,7 @@
 
     bool isAuthorized = SignInManager.IsSignedIn(User);
 
+    // --- UNLOCK REQUIREMENTS ---
     const int T1_DEBUG = 3000;
     const int T1_OUTPUT = 5000;
     const int TIER2_UNLOCK = 7000;
@@ -50,7 +51,7 @@
                     <h3>BEGINNER: HTML & CSS</h3>
                 </div>
                 <div class="game-mode-links">
-                    <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Beginner">Multiple Choice</a>
+                    <a asp-controller="Quizzes" asp-action="StartTierIntro" asp-route-id="Beginner">Multiple Choice</a>
 
                     @if (isAuthorized && userScore >= T1_DEBUG)
                     {
@@ -83,7 +84,7 @@
                 <div class="game-mode-links">
                     @if (isAuthorized && userScore >= TIER2_UNLOCK)
                     {
-                        <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Intermediate">Multiple Choice</a>
+                        <a asp-controller="Quizzes" asp-action="StartTierIntro" asp-route-id="Intermediate">Multiple Choice</a>
 
                         @if (userScore >= T2_DEBUG)
                         {
@@ -121,8 +122,8 @@
                 <div class="game-mode-links">
                     @if (isAuthorized && userScore >= TIER3_UNLOCK)
                     {
-                        <a asp-controller="Quizzes" asp-action="GameStart" asp-route-id="Professional">Multiple Choice</a>
-
+                        <a asp-controller="Quizzes" asp-action="StartTierIntro" asp-route-id="Professional">Multiple Choice</a>
+                        @* FIX: Enclose markup in braces for the following if-statement *@
                         @if (userScore >= T3_DEBUG)
                         {
                             <a asp-controller="Quizzes" asp-action="PlayDebugging" asp-route-id="Professional">Debugging</a>

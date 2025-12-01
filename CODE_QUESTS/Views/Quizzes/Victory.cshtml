@@ -1,0 +1,53 @@
+﻿@using CODE_QUESTS.Models
+@{
+    int currentScene = 1;
+    if (ViewData["SceneNumber"] != null) { currentScene = Convert.ToInt32(ViewData["SceneNumber"]); }
+
+    ViewData["Title"] = "Victory!";
+    ViewData["BodyClass"] = "cinematic-bg";
+
+    string nextAction = "Victory";
+    string nextRouteId = (currentScene + 1).ToString();
+
+    // If on the final scene, "Play Again" goes to the Quiz List (Index)
+    if (currentScene >= 2)
+    {
+        nextAction = "Index";
+    }
+}
+
+<div class="container">
+    <div class="game-start-scene">
+
+        @if (currentScene == 1)
+        {
+            <div class="scene-layer bg-layer bg-victory-1"></div>
+
+            <div class="dialogue-box">
+                <p>Princess Arraya: “You have mastered all tiers. The Source Code is whole again.”</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="Victory" asp-route-scene="2">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 2)
+        {
+            <div class="scene-layer bg-layer bg-victory-2"></div>
+
+            <div class="scene-layer overlay-layer overlay-trophy"></div>
+
+            <div class="dialogue-box">
+                <p>Syntaxia Restored!</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="Index" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+                      
+                        <img src="~/images/arrow-right.png" alt="Play Again" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

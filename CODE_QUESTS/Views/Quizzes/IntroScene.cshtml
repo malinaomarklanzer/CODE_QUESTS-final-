@@ -1,79 +1,101 @@
 ﻿@using CODE_QUESTS.Models
 @{
-    // Get current scene number (defaulting to 1)
+    // --- SETUP ---
     int currentScene = 1;
-    if (ViewData["SceneNumber"] != null)
-    {
-        currentScene = Convert.ToInt32(ViewData["SceneNumber"]);
-    }
+    if (ViewData["SceneNumber"] != null) { currentScene = Convert.ToInt32(ViewData["SceneNumber"]); }
 
-    ViewData["Title"] = $"Cinematic - Scene {currentScene}";
+    // "Intro" = The Game Start Animation (Kingdom, Knight, etc.)
+    // "Beginner" = The Tier 1 Animation (Crystal, Buglord, etc.)
+    string quizId = ViewData["QuizId"]?.ToString() ?? "Intro";
+
+    ViewData["Title"] = $"Cinematic - {quizId} - Scene {currentScene}";
     ViewData["BodyClass"] = "cinematic-bg";
 
-    // Get the Quiz ID to pass along
-    string quizId = ViewData["QuizId"]?.ToString() ?? "Beginner";
-
-    // Determine next step
-    string nextController = "Quizzes";
-    string nextAction = "IntroScene";
-    string nextRouteId = (currentScene + 1).ToString();
-    string buttonText = "Continue";
-
-    // Logic for the final scene
-    if (currentScene >= 3)
-    {
-        nextAction = "PlayMultipleChoice";
-        buttonText = "Start Quest";
-        nextRouteId = quizId; // Pass the quiz ID to the game
-    }
+    string controller = "Quizzes";
 }
 
 <div class="container">
     <div class="game-start-scene">
 
-        @if (currentScene == 1)
+        @if (quizId == "Intro" || quizId == "Main")
         {
-            <div class="game-bg-image scene-one-capture"></div>
-            <div class="dialogue-box style-scene-one">
-                <p>When Princess Arraya, guardian of the Source Code, is captured by bandits, the kingdom begins to fall apart.</p>
-
-                <div class="action-button">
-                    <a asp-controller="@nextController" asp-action="@nextAction" asp-route-scene="@nextRouteId" asp-route-quizId="@quizId">
-                        @buttonText
-                        <img src="~/images/arrow-right.png" alt="Next" />
-                    </a>
+            if (currentScene == 1)
+            {
+                <div class="scene-layer bg-layer bg-scene-1"></div>
+                <div class="dialogue-box">
+                    <p>In the magical Kingdom of Syntaxia, web code powers the entire world...</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="2" asp-route-quizId="Intro"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
                 </div>
-            </div>
+            }
+            else if (currentScene == 2)
+            {
+                <div class="scene-layer bg-layer bg-scene-2"></div>
+        
+                <div class="scene-layer overlay-layer overlay-scene-2"></div>
+                <div class="dialogue-box">
+                    <p>When Princess Arraya is captured by bandits, the kingdom begins to fall apart.</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="3" asp-route-quizId="Intro"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
+                </div>
+            }
+            else if (currentScene == 3)
+            {
+                <div class="scene-layer bg-layer bg-scene-3"></div>
+        
+                <div class="scene-layer overlay-layer overlay-scene-3"></div>
+                <div class="dialogue-box">
+                    <p>Only the brave Sir Codewell can restore order by mastering the code!</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="4" asp-route-quizId="Intro"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
+                </div>
+            }
+            else if (currentScene == 4)
+            {
+                <div class="scene-layer bg-layer bg-scene-4"></div>
+        
+                <div class="scene-layer overlay-layer overlay-scene-4"></div>
+                <div class="dialogue-box">
+                    <p>“By the power of the Source Code, I will restore Syntaxia!”</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="5" asp-route-quizId="Intro"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
+                </div>
+            }
+            else if (currentScene == 5)
+            {
+                <div class="scene-layer bg-layer bg-scene-5"></div>
+                <div class="dialogue-box">
+                    <p>“Knight, fix the code to reach me… The Source Code is shattered!”</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="Index"><img src="~/images/arrow-right.png" alt="Select Challenge" /></a></div>
+                </div>
+            }
         }
 
-        else if (currentScene == 2)
+        else if (quizId == "Beginner")
         {
-        <div class="game-bg-image scene-two-vow"></div>
-        <div class="dialogue-box style-scene-two">
-            <p>Only the brave Sir Codewell can restore order by mastering the three ancient languages of code!</p>
-
-            <div class="action-button">
-                <a asp-controller="@nextController" asp-action="@nextAction" asp-route-scene="@nextRouteId" asp-route-quizId="@quizId">
-                    @buttonText
-                    <img src="~/images/arrow-right.png" alt="Next" />
-                </a>
-            </div>
-        </div>
+            if (currentScene == 1)
+            {
+                <div class="scene-layer bg-layer bg-tier1-1"></div>
+        
+                <div class="scene-layer overlay-layer overlay-crystal-princess"></div>
+                <div class="dialogue-box">
+                    <p>Princess Arraya demonstrates the Responsive Code Crystal, showing its three-tier glow.</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="2" asp-route-quizId="Beginner"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
+                </div>
+            }
+            else if (currentScene == 2)
+            {
+                <div class="scene-layer bg-layer bg-tier1-2"></div>
+                <div class="dialogue-box">
+                    <p>The Buglord's attack shatters the crystal! Shards fly to the HTML Forest...</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="IntroScene" asp-route-scene="3" asp-route-quizId="Beginner"><img src="~/images/arrow-right.png" alt="Next" /></a></div>
+                </div>
+            }
+            else if (currentScene == 3)
+            {
+                <div class="scene-layer bg-layer bg-tier1-3"></div>
+                <div class="dialogue-box">
+                    <p>Objective: Restore the World's Structure (HTML) and Style (CSS) to rebuild the foundation.</p>
+                    <div class="action-button"><a asp-controller="@controller" asp-action="PlayMultipleChoice" asp-route-id="Beginner"><img src="~/images/arrow-right.png" alt="Start" /></a></div>
+                </div>
+            }
         }
 
-        else if (currentScene == 3)
-        {
-        <div class="game-bg-image scene-three-plea"></div>
-        <div class="dialogue-box style-scene-three">
-            <p>“Knight, fix the code to reach me… The Source Code is shattered into tiers across the realm.”</p>
-
-            <div class="action-button">
-                <a asp-controller="Quizzes" asp-action="PlayMultipleChoice" asp-route-id="@quizId">
-                    Start Quest
-                    <img src="~/images/arrow-right.png" alt="Start" />
-                </a>
-            </div>
-        </div>
-        }
     </div>
 </div>

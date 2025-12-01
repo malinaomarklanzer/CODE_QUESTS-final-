@@ -1,0 +1,74 @@
+﻿@using CODE_QUESTS.Models
+@{
+    int currentScene = 1;
+    if (ViewData["SceneNumber"] != null) { currentScene = Convert.ToInt32(ViewData["SceneNumber"]); }
+
+    ViewData["Title"] = "Intermediate Story";
+    ViewData["BodyClass"] = "cinematic-bg";
+    string quizId = "Intermediate";
+    string viewName = "IntroIntermediate";
+    string nextAction = "NavigateTierIntro";
+    string nextRouteId = (currentScene + 1).ToString();
+    string buttonText = "Continue";
+
+    if (currentScene >= 3)
+    {
+        nextAction = "PlayMultipleChoice";
+        buttonText = "Start Quest";
+        nextRouteId = quizId;
+    }
+}
+
+<div class="container">
+    <div class="game-start-scene">
+
+        @if (currentScene == 1)
+        {
+            <div class="scene-layer bg-layer bg-tier2-1"></div>
+
+            <div class="scene-layer overlay-layer overlay-tier2-knight-s1"></div>
+
+            <div class="scene-layer overlay-layer overlay-tier2-princess"></div>
+
+            <div class="dialogue-box">
+                <p>“Knight… You have restored the forest. Now the Logic Plains awaken… Java and C# await you.”</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="@nextAction" asp-route-viewName="@viewName" asp-route-nextScene="2" asp-route-quizId="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 2)
+        {
+            <div class="scene-layer bg-layer bg-tier2-2"></div>
+
+            <div class="scene-layer overlay-layer overlay-tier2-knight"></div>
+            <div class="scene-layer overlay-layer overlay-tier2-buglord"></div>
+
+            <div class="dialogue-box">
+                <p>“HAHAHAHA KNIGHT!! Goodluck on this one!!”</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="@nextAction" asp-route-viewName="@viewName" asp-route-nextScene="3" asp-route-quizId="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 3)
+        {
+            <div class="scene-layer bg-layer bg-tier2-3"></div>
+
+            <div class="dialogue-box">
+                <p>Objective: Fix logic engines, activate machinery, and debug the programs powering Syntaxia’s technology.</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="PlayMultipleChoice" asp-route-id="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Start" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

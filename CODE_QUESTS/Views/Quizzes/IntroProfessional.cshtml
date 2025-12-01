@@ -1,0 +1,53 @@
+﻿@using CODE_QUESTS.Models
+@{
+    // Setup
+    int currentScene = 1;
+    if (ViewData["SceneNumber"] != null) { currentScene = Convert.ToInt32(ViewData["SceneNumber"]); }
+
+    ViewData["Title"] = "Professional Story";
+    ViewData["BodyClass"] = "cinematic-bg";
+    string quizId = "Professional";
+    string viewName = "IntroProfessional";
+    string nextAction = "NavigateTierIntro";
+    string nextRouteId = (currentScene + 1).ToString();
+    string buttonText = "Continue";
+
+    if (currentScene >= 2)
+    { // Only 2 scenes in this tier based on your request
+        nextAction = "PlayMultipleChoice";
+        buttonText = "Start Quest";
+        nextRouteId = quizId;
+    }
+}
+
+<div class="container">
+    <div class="game-start-scene">
+
+        @if (currentScene == 1)
+        {
+            <div class="scene-layer bg-layer bg-tier3-1"></div>
+            <div class="dialogue-box">
+                <p>Princess Arraya: “The deepest tier awakens… The advanced magic awaits.”</p>
+                <div class="action-button">
+                    <a asp-controller="Quizzes" asp-action="@nextAction" asp-route-viewName="@viewName" asp-route-nextScene="2" asp-route-quizId="@quizId">
+                        <img src="~/images/arrow-right.png" alt="Next" />
+                    </a>
+                </div>
+            </div>
+        }
+
+        else if (currentScene == 2) {
+        <div class="scene-layer bg-layer bg-tier3-2"></div>
+        <div class="scene-layer overlay-layer overlay-tier3-knight"></div>
+
+        <div class="dialogue-box" style="top: 137px; bottom: auto;">
+            <p>Objective: Repair the deepest magic veins of Syntaxia using high-level magic and compiled power.</p>
+            <div class="action-button">
+                <a asp-controller="Quizzes" asp-action="PlayMultipleChoice" asp-route-id="@quizId">
+                    <img src="~/images/arrow-right.png" alt="Start" />
+                </a>
+            </div>
+        </div>
+        }
+    </div>
+</div>
