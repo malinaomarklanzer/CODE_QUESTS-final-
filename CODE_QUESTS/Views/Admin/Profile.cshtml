@@ -1,0 +1,110 @@
+﻿@using CODE_QUESTS.Models
+@{
+    ViewData["Title"] = "Admin Profile";
+    ViewData["BodyClass"] = "profile-page-background"; // Reuses the purple gradient
+}
+
+<div class="container">
+
+    <section class="profile-header-banner">
+
+        <div class="profile-banner-bg"></div>
+
+        <div class="profile-user-info">
+            <div class="profile-avatar">
+                <img src="~/images/image 8.png" alt="Admin Avatar" />
+            </div>
+            <div class="profile-user-text">
+                <h2>Game Master</h2>
+                <p>admin@codequest.com</p>
+            </div>
+            <a href="#" class="settings-btn">Edit Profile</a>
+        </div>
+    </section>
+
+    <section class="stats-overview">
+        <div class="stat-card">
+            <img src="~/images/Trophy.png" alt="Users Icon" />
+            <span class="stat-value rank">300</span>
+            <span class="stat-label">Total Users</span>
+        </div>
+        <div class="stat-card">
+            <img src="~/images/witch-hat 2.png" alt="Quizzes Icon" />
+            <span class="stat-value points">25</span>
+            <span class="stat-label">Active Quizzes</span>
+        </div>
+        <div class="stat-card">
+            <img src="~/images/Starry.png" alt="Reports Icon" />
+            <span class="stat-value quests">3</span>
+            <span class="stat-label">Pending Reports</span>
+        </div>
+    </section>
+
+    <section class="profile-content-card">
+        <h3>Admin Tools</h3>
+        <div class="achievements-grid">
+            <div class="achievement-item">
+                <a asp-controller="Admin" asp-action="CreateQuiz" style="text-decoration:none; color:inherit;">
+                    <img src="~/images/image .png" alt="Create Quiz" /> <p>Create Quiz</p>
+                </a>
+            </div>
+            <div class="achievement-item">
+                <a asp-controller="Admin" asp-action="ViewAllUsers" style="text-decoration:none; color:inherit;">
+                    <img src="~/images/image 4.png" alt="Manage Users" /> <p>Manage Users</p>
+                </a>
+            </div>
+            <div class="achievement-item">
+                <a asp-controller="Admin" asp-action="CheckLeaderboards" style="text-decoration:none; color:inherit;">
+                    <img src="~/images/Trophy.png" alt="Leaderboard" />
+                    <p>Leaderboards</p>
+                </a>
+            </div>
+            <div class="achievement-item">
+                <a asp-controller="Admin" asp-action="DraftQuizzes" style="text-decoration:none; color:inherit;">
+                    <img src="~/images/image 3.png" alt="Drafts" />
+                    <p>View Drafts</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-content-card">
+        <h3>Recent System Activity</h3>
+        <table class="activity-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Action</th>
+                    <th>User</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10 mins ago</td>
+                    <td>Created Quiz "C++ Loop Mastery"</td>
+                    <td>Game Master</td>
+                    <td class="result-pass">SUCCESS</td>
+                </tr>
+                <tr>
+                    <td>1 hour ago</td>
+                    <td>Banned User "SpamBot99"</td>
+                    <td>Game Master</td>
+                    <td class="result-fail">BANNED</td>
+                </tr>
+                <tr>
+                    <td>2 hours ago</td>
+                    <td>Updated Leaderboard</td>
+                    <td>System</td>
+                    <td class="result-perfect">UPDATED</td>
+                </tr>
+                <tr>
+                    <td>Yesterday</td>
+                    <td>Edited "HTML Basics"</td>
+                    <td>Game Master</td>
+                    <td class="result-pass">SAVED</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

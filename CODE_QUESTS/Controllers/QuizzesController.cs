@@ -122,12 +122,39 @@ namespace CODE_QUESTS.Controllers
             ViewData["QuizTitle"] = $"{id.ToUpper()}: GUESS THE OUTPUT";
             return View("PlayGuessOutput", questions);
         }
+    
+    public IActionResult CreateQuiz()
+        {
+            return View();
+        }
+        // --- 2. VIEW ALL USERS ---
+        public IActionResult ViewAllUsers()
+        {
+            return View();
+        }
+
+        // --- 3. DRAFT QUIZZES (List of drafts) ---
+        public IActionResult DraftQuizzes()
+        {
+            return View();
+        }
+
+        // --- 4. CHECK LEADERBOARDS ---
+        public IActionResult CheckLeaderboards()
+        {
+            return View();
+        }
+        // --- 5. ADMIN PROFILE ---
+        public IActionResult Profile()
+        {
+            return View();
+        }
     }
 
-    // ==================================================================
-    // --- QUESTION BANK (TIER BASED) ---
-    // ==================================================================
-    public static class QuestionBank
+    // ==================================================================
+    // --- QUESTION BANK (TIER BASED) ---
+    // ==================================================================
+    public static class QuestionBank
     {
         public static List<QuestionViewModel> GetMultipleChoice(string tier)
         {

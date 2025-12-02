@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Leaderboard Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="admin-page-wrapper">
+    <div class="admin-card-container">
+
+        <div class="admin-page-header">
+            <h1 class="page-title-large" style="margin:0;">Leaderboard Overview</h1>
+            <div class="admin-profile-box">
+                <img src="~/images/image 8.png" alt="Admin" class="admin-avatar" />
+                <div class="admin-info">
+                    <h4>Game Master</h4>
+                    <span>Administrator</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar" style="justify-content: flex-start; gap: 2rem;">
+            <div class="dropdown-label-group">
+                <label>Time Period:</label>
+                <select class="pixel-input filter-select">
+                    <option>All Time</option>
+                    <option>Weekly</option>
+                </select>
+            </div>
+            <div class="dropdown-label-group">
+                <label>Language:</label>
+                <select class="pixel-input filter-select">
+                    <option>Top 10</option>
+                    <option>HTML</option>
+                </select>
+            </div>
+        </div>
+
+        <table class="admin-table leaderboard-table-admin">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Total Score</th>
+                    <th>Quest Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="rank-gold-row">
+                    <td><img src="~/images/gold-medal.png" class="rank-icon" alt="1st" /> #1</td>
+                    <td>CodeWarrior</td>
+                    <td>7,000</td>
+                    <td>80</td>
+                </tr>
+                <tr class="rank-silver-row">
+                    <td><img src="~/images/silver-medal.png" class="rank-icon" alt="2nd" /> #2</td>
+                    <td>ByteNinja</td>
+                    <td>6,000</td>
+                    <td>48</td>
+                </tr>
+                <tr class="rank-bronze-row">
+                    <td><img src="~/images/bronze-medal.png" class="rank-icon" alt="3rd" /> #3</td>
+                    <td>SyntaxSlayer</td>
+                    <td>5,000</td>
+                    <td>45</td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td>BugHunterX</td>
+                    <td>4,500</td>
+                    <td>40</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <span>« Previous</span> <span class="active-page">1</span> <span>2</span> <span>Next »</span>
+        </div>
+    </div>
+</div>

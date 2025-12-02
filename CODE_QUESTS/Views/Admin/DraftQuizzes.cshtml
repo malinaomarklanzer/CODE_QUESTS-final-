@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Draft Quizzes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="admin-page-wrapper">
+    <div class="admin-card-container">
+
+        <div class="admin-page-header">
+            <h1 class="page-title-large" style="margin:0;">Draft Quizzes</h1>
+            <div class="admin-profile-box">
+                <img src="~/images/image 8.png" alt="Admin" class="admin-avatar" />
+                <div class="admin-info">
+                    <h4>Game Master</h4>
+                    <span>Administrator</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="search-group">
+                <input type="text" class="pixel-input search-input" placeholder="Search Drafts..." />
+            </div>
+            <button class="action-btn btn-pink" onclick="location.href='@Url.Action("CreateQuiz", "Admin")'">+ Create New</button>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Quiz Title</th>
+                    <th>Category</th>
+                    <th>Last Edited</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Draft Quiz Html</strong></td>
+                    <td>HTML</td>
+                    <td>2 hours ago</td>
+                    <td>
+                        <button class="icon-btn edit-btn">✏️ Edit</button>
+                        <button class="icon-btn delete-btn">🗑️</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Java Basics II</strong></td>
+                    <td>JAVA</td>
+                    <td>1 day ago</td>
+                    <td>
+                        <button class="icon-btn edit-btn">✏️ Edit</button>
+                        <button class="icon-btn delete-btn">🗑️</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

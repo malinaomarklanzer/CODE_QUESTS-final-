@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Create New Quiz";
+    // Ensure we use the pixel-art layout
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="create-quiz-page-wrapper">
+
+    <div class="create-quiz-container">
+        <h1 class="page-title-large">Create New Quiz</h1>
+
+        <form class="quiz-builder-form">
+
+            <div class="builder-columns">
+
+                <div class="quiz-settings-column">
+
+                    <div class="form-group">
+                        <label>Quiz Title</label>
+                        <input type="text" class="pixel-input" placeholder="Enter quiz title..." />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="pixel-input" rows="3" placeholder="Describe the quiz..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Difficulty Level</label>
+                        <div class="radio-group">
+                            <label class="radio-container">
+                                Easy
+                                <input type="radio" name="difficulty" value="easy">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                Medium
+                                <input type="radio" name="difficulty" value="medium">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                Hard
+                                <input type="radio" name="difficulty" value="hard">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Timer Settings</label>
+                        <div class="timer-row">
+                            <label class="checkbox-container">
+                                Enable Timer
+                                <input type="checkbox" id="enableTimer">
+                                <span class="checkmark-box"></span>
+                            </label>
+                            <input type="number" class="pixel-input short-input" placeholder="Mins" />
+                        </div>
+                    </div>
+
+                    <div class="questions-preview-list">
+                        <div class="q-item">1. What is the meaning of HTML? <span class="trash-icon">🗑️</span></div>
+                        <div class="q-item">2. Which tag is used for links? <span class="trash-icon">🗑️</span></div>
+                        <div class="q-item">3. Define CSS syntax. <span class="trash-icon">🗑️</span></div>
+                        <div class="add-new-btn">+ Add New Question</div>
+                    </div>
+
+                </div>
+
+                <div class="question-editor-column">
+
+                    <div class="form-group">
+                        <label>Topic / Category</label>
+                        <select class="pixel-input">
+                            <option>HTML</option>
+                            <option>CSS</option>
+                            <option>JavaScript</option>
+                            <option>Java</option>
+                            <option>C#</option>
+                            <option>C++</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Question Text</label>
+                        <input type="text" class="pixel-input" placeholder="Type question here..." />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="radio-group">
+                            <label class="radio-container">
+                                Single Choice
+                                <input type="radio" name="qType" checked>
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                Multiple Choice
+                                <input type="radio" name="qType">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="pixel-input option-input" placeholder="Option 1" />
+                        <input type="text" class="pixel-input option-input" placeholder="Option 2" />
+                        <input type="text" class="pixel-input option-input" placeholder="Option 3" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Explanation</label>
+                        <textarea class="pixel-input" rows="2" placeholder="Explain the answer..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="action-btn btn-pink">Save As Draft</button>
+                <button type="submit" class="action-btn btn-pink">Publish Quiz</button>
+            </div>
+
+        </form>
+    </div>
+</div>

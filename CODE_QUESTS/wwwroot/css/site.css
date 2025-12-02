@@ -2690,16 +2690,16 @@ body {
 /* --- BEGINNER TIER CINEMATICS --- */
 
 .bg-beginner-1 {
-    background-image: url('../images/image 25.png');
+    background-image: url('/images/image 25.png');
     background-size: 100% 100%;
 
     .bg-beginner-2 {
-        background-image: url('../images/image 26.png');
+        background-image: url('/images/image 26.png');
         background-size: 100% 100%;
     }
 
     .bg-beginner-3 {
-        background-image: url('../images/Scene3bg.png');
+        background-image: url('/images/Scene3bg.png');
         background-size: 100% 100%;
     }
     /* =============================================== */
@@ -2707,23 +2707,23 @@ body {
     /* =============================================== */
     /* --- BACKGROUNDS --- */
     .bg-tier2-1 {
-        background-image: url('../images/image 25.png');
+        background-image: url('/images/image 25.png');
         background-size: 100% 100%;
     }
 
     .bg-tier2-2 {
-        background-image: url('../images/image 25.png');
+        background-image: url('/images/image 25.png');
         background-size: 100% 100%;
     }
 
     .bg-tier2-3 {
-        background-image: url('../images/image 25.png');
+        background-image: url('/images/image 25.png');
         background-size: 100% 100%;
     }
     /* --- OVERLAYS --- */
     /* SCENE 1: Knight (Left) */
     .overlay-tier2-knight-s1 {
-        background-image: url('../images/interknight.png');
+        background-image: url('/images/interknight.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center bottom; /* Fixed alignment */
@@ -2736,7 +2736,7 @@ body {
     }
     /* SCENE 1: Princess (Right) */
     .overlay-tier2-princess {
-        background-image: url('../images/interprin.png');
+        background-image: url('/images/interprin.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center bottom;
@@ -2749,7 +2749,7 @@ body {
     }
     /* SCENE 2: Knight (Battle Stance) */
     .overlay-tier2-knight {
-        background-image: url('../images/Knighty.png');
+        background-image: url('/images/Knighty.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center bottom;
@@ -2762,7 +2762,7 @@ body {
     }
     /* SCENE 2: Buglord (Villain) */
     .overlay-tier2-buglord {
-        background-image: url('../images/bug.png');
+        background-image: url('/images/bug.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center bottom;
@@ -2776,17 +2776,17 @@ body {
     /* --- TIER 3 CINEMATICS (Professional) --- */
 
     .bg-tier3-1 {
-        background-image: url('../images/image 25.png');
+        background-image: url('/images/image 25.png');
         background-size: 100% 100%;
     }
 
     .bg-tier3-2 {
-        background-image: url('../images/image 25.png'); /* Throne Room BG */
+        background-image: url('/images/image 25.png'); /* Throne Room BG */
         background-size: 100% 100%;
     }
 
     .overlay-tier3-knight {
-        background-image: url('../images/interknight.png');
+        background-image: url('/images/interknight.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center bottom;
@@ -2801,18 +2801,18 @@ body {
     /* --- VICTORY SCENES --- */
     /* Scene 1: Princess & Knight (Throne Room) */
     .bg-victory-1 {
-        background-image: url('../images/Scene1bg.png');
+        background-image: url('/images/Scene1bg.png');
         background-size: 100% 100%;
     }
     /* Scene 2: Restored Kingdom */
     .bg-victory-2 {
-        background-image: url('../images/Scene1bg.png');
+        background-image: url('/images/Scene1bg.png');
         background-size: 100% 100%;
     }
 
 
     .overlay-trophy {
-        background-image: url('../images/Trophy.png');
+        background-image: url('/images/Trophy.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
@@ -2833,5 +2833,425 @@ body {
         50% {
             transform: translate(-50%, -50%) scale(1.1);
         }
+
     }
+}
+/* =============================================== */
+/* 14. ADMIN - CREATE QUIZ PAGE                    */
+/* =============================================== */
+
+.create-quiz-page-wrapper {
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.create-quiz-container {
+    background: #FFFFFF;
+    border: 2px solid #C4B5FD;
+    border-radius: 20px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1245px;
+    box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.page-title-large {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #000;
+}
+
+/* Two Column Layout */
+.builder-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+/* Form Inputs Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+    .form-group label {
+        display: block;
+        font-family: 'Pixelify Sans', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #000;
+    }
+
+.pixel-input {
+    width: 100%;
+    background: rgba(22, 21, 21, 0.05); /* Light gray from your design */
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    border-radius: 7px;
+    padding: 1rem;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+    .pixel-input.short-input {
+        width: 120px;
+        display: inline-block;
+        margin-left: 1rem;
+    }
+
+/* Radio Buttons Styling */
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.radio-container, .checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 400;
+}
+
+    .radio-container input, .checkbox-container input {
+        margin-right: 0.5rem;
+        width: 20px;
+        height: 20px;
+    }
+
+/* Question List Preview Box */
+.questions-preview-list {
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    border-radius: 10px;
+    padding: 1rem;
+    background: #fff;
+    min-height: 300px;
+}
+
+.q-item {
+    background: rgba(22, 21, 21, 0.05);
+    padding: 1rem;
+    border-radius: 7px;
+    margin-bottom: 0.5rem;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trash-icon {
+    cursor: pointer;
+}
+
+.add-new-btn {
+    text-align: center;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 1rem;
+    cursor: pointer;
+    border: 2px dashed #ccc;
+    border-radius: 7px;
+    margin-top: 1rem;
+    color: #555;
+}
+
+    .add-new-btn:hover {
+        background: #f9f9f9;
+    }
+
+/* Option Inputs */
+.option-input {
+    margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.action-btn {
+    width: 300px;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-pink {
+    background-color: #F72585;
+}
+
+    .btn-pink:hover {
+        background-color: #D91570;
+    }
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .builder-columns {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+    }
+}
+/* =============================================== */
+/* 15. ADMIN PAGES (USERS, DRAFTS, LEADERBOARD)    */
+/* =============================================== */
+
+.admin-page-wrapper {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-card-container {
+    background: #FFFFFF;
+    border: 2px solid #C4B5FD; /* Light purple border */
+    border-radius: 20px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1100px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    min-height: 600px;
+}
+
+/* --- FILTERS & SEARCH --- */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-group {
+    position: relative;
+    width: 350px;
+}
+
+.search-input {
+    width: 100%;
+    padding-right: 50px; /* Space for icon */
+}
+
+.search-icon-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-select {
+    width: auto;
+    min-width: 150px;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+}
+
+.dropdown-label-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* --- BUTTONS --- */
+.btn-blue {
+    background-color: #4361EE;
+    color: white;
+}
+
+    .btn-blue:hover {
+        background-color: #3a56d1;
+    }
+
+.add-user-btn {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+    font-size: 18px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+}
+
+/* --- ADMIN TABLES --- */
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Spacing between rows */
+    margin-bottom: 2rem;
+}
+
+    .admin-table th {
+        text-align: left;
+        font-family: 'Pixelify Sans', sans-serif;
+        font-size: 18px;
+        color: #555;
+        padding: 10px 20px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .admin-table td {
+        background-color: #fcfcfc;
+        padding: 15px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+        .admin-table td:first-child {
+            border-left: 1px solid #eee;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .admin-table td:last-child {
+            border-right: 1px solid #eee;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+/* --- STATUS BADGES --- */
+.status-badge {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.status-banned {
+    background-color: #FF8A8A; /* Light Red */
+    border: 2px solid #FF5C5C;
+}
+
+.status-active {
+    background-color: #86EFAC; /* Light Green */
+    border: 2px solid #22C55E;
+    color: #065F46;
+}
+
+.status-inactive {
+    background-color: #E5E7EB; /* Grey */
+    border: 2px solid #9CA3AF;
+    color: #6B7280;
+}
+
+/* --- LEADERBOARD HIGHLIGHTS --- */
+.rank-gold-row td {
+    background-color: #FFFBEB; /* Yellow Tint */
+    border-color: #FCD34D;
+    color: #B45309;
+}
+
+.rank-silver-row td {
+    background-color: #F3F4F6;
+    border-color: #D1D5DB;
+}
+
+.rank-bronze-row td {
+    background-color: #FFF7ED;
+    border-color: #FDBA74;
+    color: #9A3412;
+}
+
+/* --- PAGINATION --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 700;
+    color: #555;
+    cursor: pointer;
+}
+
+    .pagination span:hover, .pagination .active-page {
+        color: #4361EE;
+    }
+/* =============================================== */
+/* 16. ADMIN HEADER & MEDALS                       */
+/* =============================================== */
+
+/* Consistent Header for Admin Pages */
+.admin-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+}
+
+.admin-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f9fafb;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid #e5e7eb;
+}
+
+.admin-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #4361EE;
+    object-fit: cover;
+}
+
+.admin-info h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.admin-info span {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Medal Icons for Leaderboard */
+.rank-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 8px;
 }

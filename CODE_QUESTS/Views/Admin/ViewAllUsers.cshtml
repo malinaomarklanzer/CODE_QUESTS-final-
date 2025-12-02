@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "View All Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="admin-page-wrapper">
+    <div class="admin-card-container">
+
+        <div class="admin-page-header">
+            <h1 class="page-title-large" style="margin:0;">View All Users</h1>
+            <div class="admin-profile-box">
+                <img src="~/images/image 8.png" alt="Admin" class="admin-avatar" />
+                <div class="admin-info">
+                    <h4>Game Master</h4>
+                    <span>Administrator</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="search-group">
+                <input type="text" class="pixel-input search-input" placeholder="Search by Username or Email" />
+                <button class="search-icon-btn"><img src="~/images/search-icon.png" alt="Search" /></button>
+            </div>
+            <div class="dropdown-group">
+                <select class="pixel-input filter-select">
+                    <option>Level 1-10</option>
+                    <option>Level 11-20</option>
+                </select>
+                <select class="pixel-input filter-select">
+                    <option>All Active</option>
+                    <option>Banned</option>
+                </select>
+            </div>
+            <button class="action-btn btn-blue add-user-btn">+ Add New User</button>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Quizzes Completed</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ByteBuddy</td>
+                    <td>bytebuddy@gmail.com</td>
+                    <td>18,240 (Lv.18)</td>
+                    <td><span class="status-badge status-banned">Banned</span></td>
+                </tr>
+                <tr>
+                    <td>SyntaxSage</td>
+                    <td>syntaxsage.dev@gmail.com</td>
+                    <td>15,340 (Lv.15)</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                </tr>
+                <tr>
+                    <td>PixelGeek_09</td>
+                    <td>pixelgeek09@gmail.com</td>
+                    <td>8,240 (Lv.8)</td>
+                    <td><span class="status-badge status-inactive">Inactive</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <span>« Previous</span> <span class="active-page">1</span> <span>2</span> <span>3</span> <span>Next »</span>
+        </div>
+    </div>
+</div>
